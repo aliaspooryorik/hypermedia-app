@@ -1,0 +1,8 @@
+{
+    "name":"hypermedia-app",
+    "web":{
+        "rewrites":{
+            "enable":"true"
+        }
+    }
+}

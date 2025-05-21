@@ -1,0 +1,12 @@
+{
+    "dependencies":{
+        "cbwire":"^4.1.9"
+    },
+    "installPaths":{
+        "cbwire":"modules/cbwire/"
+    },
+    "location":"forgeboxStorage",
+    "name":"hypermedia-app",
+    "slug":"hypermedia-app",
+    "version":"1.0.0"
+}
