@@ -6,7 +6,7 @@
         <input 
             type="text" 
             wire:model="title" 
-            placeholder="New todo item" 
+            placeholder="New todo..." 
             class="form-control" 
             style="display:inline-block; width:auto; margin-right:8px;"
         >
@@ -14,6 +14,16 @@
             <i class="bi bi-plus-circle" aria-hidden="true"></i> Add Item
         </button>
     </form>
+
+    <div>
+        <input 
+            type="text" 
+            wire:model.live="search" 
+            placeholder="search..." 
+            class="form-control" 
+            style="display:inline-block; width:auto; margin-right:8px;"
+        >
+    </div>
     
     <cfif list().isEmpty()>
         <h2 class="text-blue">No items found</h2>

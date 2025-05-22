@@ -2,14 +2,15 @@
 component extends="cbwire.models.Component" {
     
     property name="TodoService" inject;
-    
+
     data = {
-        "title": ""
+        "title": "",
+        "search": ""
     };
     
     // Action
     array function list() {
-        return TodoService.list();
+        return TodoService.list().filter( ( el ) => data.search.len() == 0 || el.title.findNoCase( data.search ) > 0 );
     }
 
     void function add( ) {

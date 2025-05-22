@@ -2,7 +2,9 @@ component singleton {
 
     function init() {
         variables.todos = [];
-        add( 'Example TODO' );
+        add( 'Install ColdBox' );
+        add( 'Create TODO Service' );
+        add( 'Build TODO demo app' );
         return this;
     }
 
