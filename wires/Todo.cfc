@@ -27,7 +27,7 @@ component extends="cbwire.models.Component" {
     }
 
     /**
-     * shown was the component is mounted
+     * shown while the component is mounted
      */
     function placeholder() {
         return "<div>Loading...</div>";
