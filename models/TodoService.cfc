@@ -2,26 +2,26 @@ component singleton {
 
     function init() {
         variables.todos = [];
-        add( 'Task: Create TODO Service' );
-        add( 'Epic: demo app using HTMX' );
-        add( 'Epic: demo app using cbwire' );
-        add( 'Feature: paging controls' );
-        add( 'Feature: items per page' );
-        add( 'Feature: search' );
-        add( 'Feature: sorting' );
-        add( 'Feature: validation' );
-        add( 'Feature: handle empty list' );
-        add( 'Feature: add item' );
-        add( 'Feature: delete item' );
-        add( 'Feature: show toast notification' );
+        add( 'Task: Create TODO Service', true );
+        add( 'Epic: demo app using HTMX', false );
+        add( 'Epic: demo app using cbwire', true );
+        add( 'Feature: paging controls', true );
+        add( 'Feature: items per page', true );
+        add( 'Feature: search', true );
+        add( 'Feature: sorting', true );
+        add( 'Feature: validation', false );
+        add( 'Feature: handle empty list', true );
+        add( 'Feature: add item', true );
+        add( 'Feature: delete item', true );
+        add( 'Feature: show toast notification', false );
         return this;
     }
 
-    void function add( required string title ) {
+    void function add( required string title, boolean done = false ) {
         variables.todos.append( {
             id     : createUUID(),
             title  : title,
-            active : true
+            done   : done
         } );
     }
 
@@ -29,8 +29,8 @@ component singleton {
         required string search, 
         required numeric limit,
         required numeric page,
-        string sortField = "title",
-        string sortDirection = "asc" ) {
+        required string sortField,
+        required string sortDirection ) {
 
         var dataset = fetch( search, sortField, sortDirection );
         var offset = ( page - 1 ) * limit;

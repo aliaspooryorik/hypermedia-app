@@ -46,8 +46,27 @@
                             style="border: none; background: none;"
                         >
                             Todo Item
-                            <cfif structKeyExists(data, 'sortField') AND data.sortField EQ 'title'>
-                                <cfif structKeyExists(data, 'sortDirection') AND data.sortDirection EQ 'desc'>
+                            <cfif data.sortField EQ 'title'>
+                                <cfif data.sortDirection EQ 'desc'>
+                                    <i class="bi bi-caret-down-fill ms-1" aria-hidden="true"></i>
+                                <cfelse>
+                                    <i class="bi bi-caret-up-fill ms-1" aria-hidden="true"></i>
+                                </cfif>
+                            <cfelse>
+                                <i class="bi bi-caret-up ms-1 text-muted" aria-hidden="true"></i>
+                            </cfif>
+                        </button>
+                    </th>
+                    <th scope="col">
+                        <button 
+                            type="button" 
+                            class="btn btn-link p-0 text-decoration-none text-dark fw-bold d-flex align-items-center"
+                            wire:click="toggleSort('done')"
+                            style="border: none; background: none;"
+                        >
+                            Status
+                            <cfif data.sortField EQ 'done'>
+                                <cfif data.sortDirection EQ 'desc'>
                                     <i class="bi bi-caret-down-fill ms-1" aria-hidden="true"></i>
                                 <cfelse>
                                     <i class="bi bi-caret-up-fill ms-1" aria-hidden="true"></i>
@@ -64,6 +83,13 @@
                 <cfloop array="#data.currentItems#" item="item">
                     <tr wire:key="item-#item.id#">
                         <td>#item.title#</td>
+                        <td>
+                            <cfif item.done>
+                                <span class="badge rounded-pill bg-success">Done</span>
+                            <cfelse>
+                                <span class="badge rounded-pill bg-warning text-dark">Pending</span>
+                            </cfif>
+                        </td>
                         <td>
                             <button class="btn btn-outline-danger btn-sm" wire:click="delete( '#item.id#' )" wire:loading.attr="disabled" wire:target="delete( '#item.id#' )">
                                 <i class="bi bi-trash" aria-hidden="true"></i> Remove
@@ -171,8 +197,8 @@
                     </div>
                     
                     <!--- Items per page selector --->
+                    <span class="align-self-center me-2 small text-muted">Items per page:</span>
                     <div class="btn-group" role="group" aria-label="Items per page">
-                        <span class="align-self-center me-2 small text-muted">Items per page:</span>
                         <cfloop list="5,10,15,20" index="size">
                             <button 
                                 type="button" 
