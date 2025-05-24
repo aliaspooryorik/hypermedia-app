@@ -107,7 +107,7 @@
 
         
         <!--- Pagination Controls --->
-        <cfif getTotalPages() GT 1>
+        <cfif data.totalPages GT 1>
             <div class="d-flex justify-content-between align-items-center flex-wrap mt-3">
                 <!--- Pagination controls on the left --->
                 <nav aria-label="Todo pagination">
@@ -126,7 +126,7 @@
 
                         <!--- Page Numbers --->
                         <cfset startPage = max(1, data.page - 2)>
-                        <cfset endPage = min(getTotalPages(), data.page + 2)>
+                        <cfset endPage = min(data.totalPages, data.page + 2)>
                         
                         <!--- Show first page if we're not starting from 1 --->
                         <cfif startPage GT 1>
@@ -154,14 +154,14 @@
                         </cfloop>
 
                         <!--- Show last page if we're not ending at the last page --->
-                        <cfif endPage LT getTotalPages()>
-                            <cfif endPage LT getTotalPages() - 1>
+                        <cfif endPage LT data.totalPages>
+                            <cfif endPage LT data.totalPages - 1>
                                 <li class="page-item disabled">
                                     <span class="page-link">...</span>
                                 </li>
                             </cfif>
                             <li class="page-item">
-                                <button class="page-link" wire:click="goToPage(#getTotalPages()#)">#getTotalPages()#</button>
+                                <button class="page-link" wire:click="goToPage(#data.totalPages#)">#data.totalPages#</button>
                             </li>
                         </cfif>
 
@@ -187,7 +187,7 @@
                         <input 
                             type="number" 
                             min="1" 
-                            max="#getTotalPages()#"
+                            max="#data.totalPages#"
                             placeholder="#data.page#"
                             class="form-control form-control-sm" 
                             style="width: 70px;"
@@ -215,5 +215,13 @@
 
     </cfif>
 
+    
+
+    
+    <p class="text-muted mt-2">
+        <!--- This timestamp will never update --->
+        <span wire:ignore>Component first loaded #now()#.</span>
+        <span>Component last updated #now()#.</span>
+    </p>
 </section>    
 </cfoutput>

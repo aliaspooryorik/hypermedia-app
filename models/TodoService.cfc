@@ -2,6 +2,10 @@ component singleton {
 
     function init() {
         variables.todos = [];
+        return this;
+    }
+
+    function onDiComplete() {
         add( 'Task: Create TODO Service', true );
         add( 'Epic: demo app using HTMX', false );
         add( 'Epic: demo app using cbwire', true );
@@ -14,7 +18,6 @@ component singleton {
         add( 'Feature: add item', true );
         add( 'Feature: delete item', true );
         add( 'Feature: show toast notification', false );
-        return this;
     }
 
     void function add( required string title, boolean done = false ) {
@@ -93,7 +96,6 @@ component singleton {
     }
 
     boolean function delete( required string id ) {
-        sleep( 500 ); // Simulate a delay for the delete operation
         for ( var i = 1; i <= arrayLen( variables.todos ); i++ ) {
             if ( variables.todos[i].id == id ) {
                 arrayDeleteAt( variables.todos, i );

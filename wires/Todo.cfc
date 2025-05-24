@@ -22,7 +22,15 @@ component extends="cbwire.models.Component" {
      */
     function onMount(  event, rc, prc, params ) {
         // Initialize data on mount
+        sleep(1000) // Simulate a delay for loading
         list();
+    }
+
+    /**
+     * shown was the component is mounted
+     */
+    function placeholder() {
+        return "<div>Loading...</div>";
     }
 
     /**
@@ -126,6 +134,7 @@ component extends="cbwire.models.Component" {
     }
 
     void function delete( required id ) {
+        sleep( 500 ); // Simulate a delay for the delete operation
         TodoService.delete( id );
         // Check if current page is empty after deletion
         if (arrayLen(data.currentItems) == 0 && data.page > 1) {
