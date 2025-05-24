@@ -8,6 +8,8 @@ component extends="cbwire.models.Component" {
         "limit" : 5,
         "title": "",
         "search": "",
+        "sortField": "title",
+        "sortDirection": "asc",
         "totalCount": 0,
         "totalPages": 0,
         "currentCount": 0,
@@ -36,11 +38,12 @@ component extends="cbwire.models.Component" {
     
     // Action - loads current page items and sets total count
     private function list() {
-
         var result = TodoService.list(
             search = data.search,
             limit = data.limit,
-            page = data.page
+            page = data.page,
+            sortField = data.sortField,
+            sortDirection = data.sortDirection
         );
         data.totalCount = result.totalCount;
         data.currentCount = result.data.len();
@@ -65,6 +68,22 @@ component extends="cbwire.models.Component" {
     }
 
     // ACTIONS....
+    
+    /**
+     * Toggle sort field and direction
+     */
+    void function toggleSort(required string field) {
+        if (data.sortField == field) {
+            // Same field - toggle direction
+            data.sortDirection = (data.sortDirection == "asc") ? "desc" : "asc";
+        } else {
+            // Different field - set new field and default to ascending
+            data.sortField = field;
+            data.sortDirection = "asc";
+        }
+        list();
+    }
+    
     void function nextPage() {
         if (hasNextPage()) {
             data.page++;

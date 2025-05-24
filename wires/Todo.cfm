@@ -35,16 +35,44 @@
             </cfif>
         </div>
     <cfelse>
-        <ol class="list-group mb-3">
-            <cfloop array="#data.currentItems#" item="item">
-                <li wire:key="item-#item.id#" class="list-group-item d-flex justify-content-between align-items-center">
-                    #item.title#
-                    <button class="btn btn-outline-danger btn-sm" wire:click="delete( '#item.id#' )" wire:loading.attr="disabled" wire:target="delete( '#item.id#' )">
-                        <i class="bi bi-trash" aria-hidden="true"></i> Remove
-                    </button>
-                </li>
-            </cfloop>
-        </ol>
+        <table class="table table-striped mb-3">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        <button 
+                            type="button" 
+                            class="btn btn-link p-0 text-decoration-none text-dark fw-bold d-flex align-items-center"
+                            wire:click="toggleSort('title')"
+                            style="border: none; background: none;"
+                        >
+                            Todo Item
+                            <cfif structKeyExists(data, 'sortField') AND data.sortField EQ 'title'>
+                                <cfif structKeyExists(data, 'sortDirection') AND data.sortDirection EQ 'desc'>
+                                    <i class="bi bi-caret-down-fill ms-1" aria-hidden="true"></i>
+                                <cfelse>
+                                    <i class="bi bi-caret-up-fill ms-1" aria-hidden="true"></i>
+                                </cfif>
+                            <cfelse>
+                                <i class="bi bi-caret-up ms-1 text-muted" aria-hidden="true"></i>
+                            </cfif>
+                        </button>
+                    </th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <cfloop array="#data.currentItems#" item="item">
+                    <tr wire:key="item-#item.id#">
+                        <td>#item.title#</td>
+                        <td>
+                            <button class="btn btn-outline-danger btn-sm" wire:click="delete( '#item.id#' )" wire:loading.attr="disabled" wire:target="delete( '#item.id#' )">
+                                <i class="bi bi-trash" aria-hidden="true"></i> Remove
+                            </button>
+                        </td>
+                    </tr>
+                </cfloop>
+            </tbody>
+        </table>
 
         <small class="text-muted ms-2">
             Showing #data.currentCount# of #data.totalCount# items

@@ -28,9 +28,11 @@ component singleton {
     struct function list( 
         required string search, 
         required numeric limit,
-        required numeric page ) {
+        required numeric page,
+        string sortField = "title",
+        string sortDirection = "asc" ) {
 
-        var dataset = fetch( search );
+        var dataset = fetch( search, sortField, sortDirection );
         var offset = ( page - 1 ) * limit;
         var startIndex = offset + 1;
         var datasetLength = arrayLen( dataset );
@@ -56,16 +58,38 @@ component singleton {
         };
     }
     
-    
+    /**
+     * This would normally deletegate to a database or external service.
+     * */
     private array function fetch( 
-        required string search ) {
+        required string search,
+        required string sortProperty,
+        required string sortDirection ) {
         var result = [];
+        
+        // Filter by search if provided
         if ( search.len() ) {
-            return variables.todos.filter( function( el ) {
+            result = variables.todos.filter( function( el ) {
                 return el.title.findNoCase( search ) > 0;
             } );
+        } else {
+            result = variables.todos;
         }
-        return variables.todos;
+
+        // Sort the results
+        if ( sortProperty.len() ) {
+            result.sort( function( a, b ) {
+                var valueA = a[ sortProperty ];
+                var valueB = b[ sortProperty ];
+                if ( sortDirection == "desc" ) {
+                    return compareNoCase( valueB, valueA );
+                } else {
+                    return compareNoCase( valueA, valueB );
+                }
+            } );
+        }
+        
+        return result;
     }
 
     boolean function delete( required string id ) {
