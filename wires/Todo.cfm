@@ -39,7 +39,7 @@
             <cfloop array="#data.currentItems#" item="item">
                 <li wire:key="item-#item.id#" class="list-group-item d-flex justify-content-between align-items-center">
                     #item.title#
-                    <button class="btn btn-outline-danger btn-sm" wire:click="delete( '#item.id#' )">
+                    <button class="btn btn-outline-danger btn-sm" wire:click="delete( '#item.id#' )" wire:loading.disabled wire:target="delete( '#item.id#' )">
                         <i class="bi bi-trash" aria-hidden="true"></i> Remove
                     </button>
                 </li>

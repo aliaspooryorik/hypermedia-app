@@ -69,6 +69,7 @@ component singleton {
     }
 
     boolean function delete( required string id ) {
+        sleep( 500 ); // Simulate a delay for the delete operation
         for ( var i = 1; i <= arrayLen( variables.todos ); i++ ) {
             if ( variables.todos[i].id == id ) {
                 arrayDeleteAt( variables.todos, i );
