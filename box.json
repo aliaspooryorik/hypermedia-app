@@ -1,8 +1,10 @@
 {
     "dependencies":{
+        "cbvalidation":"^4.5.0+27",
         "cbwire":"^4.1.9"
     },
     "installPaths":{
+        "cbvalidation":"modules/cbvalidation/",
         "cbwire":"modules/cbwire/"
     },
     "location":"forgeboxStorage",

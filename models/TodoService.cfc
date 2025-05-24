@@ -2,9 +2,18 @@ component singleton {
 
     function init() {
         variables.todos = [];
-        add( 'Install ColdBox' );
-        add( 'Create TODO Service' );
-        add( 'Build TODO demo app' );
+        add( 'Task: Create TODO Service' );
+        add( 'Epic: demo app using HTMX' );
+        add( 'Epic: demo app using cbwire' );
+        add( 'Feature: paging controls' );
+        add( 'Feature: items per page' );
+        add( 'Feature: search' );
+        add( 'Feature: sorting' );
+        add( 'Feature: validation' );
+        add( 'Feature: handle empty list' );
+        add( 'Feature: add item' );
+        add( 'Feature: delete item' );
+        add( 'Feature: show toast notification' );
         return this;
     }
 
@@ -16,7 +25,46 @@ component singleton {
         } );
     }
 
-    array function list( ) {
+    struct function list( 
+        required string search, 
+        required numeric limit,
+        required numeric page ) {
+
+        var dataset = fetch( search );
+        var offset = ( page - 1 ) * limit;
+        var startIndex = offset + 1;
+        var datasetLength = arrayLen( dataset );
+        
+        // Calculate how many items to return (length parameter for slice)
+        var itemsToReturn = min( limit, datasetLength - offset );
+        
+        // If startIndex exceeds dataset length, return empty array
+        if ( startIndex > datasetLength ) {
+            return {
+                totalCount: datasetLength,
+                page: page,
+                limit: limit,
+                data: [],
+            };
+        }
+        
+        return {
+            totalCount: datasetLength,
+            page: page,
+            limit: limit,
+            data: dataset.slice( startIndex, itemsToReturn ),
+        };
+    }
+    
+    
+    private array function fetch( 
+        required string search ) {
+        var result = [];
+        if ( search.len() ) {
+            return variables.todos.filter( function( el ) {
+                return el.title.findNoCase( search ) > 0;
+            } );
+        }
         return variables.todos;
     }
 
