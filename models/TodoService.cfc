@@ -95,6 +95,36 @@ component singleton {
         return result;
     }
 
+    struct function findById( required string id ) {
+        for ( var todo in variables.todos ) {
+            if ( todo.id == id ) {
+                return todo;
+            }
+        }
+        return {};
+    }
+
+    boolean function update( required string id, required string title, boolean done = false ) {
+        for ( var i = 1; i <= arrayLen( variables.todos ); i++ ) {
+            if ( variables.todos[i].id == id ) {
+                variables.todos[i].title = title;
+                variables.todos[i].done = done;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    boolean function toggleDone( required string id ) {
+        for ( var i = 1; i <= arrayLen( variables.todos ); i++ ) {
+            if ( variables.todos[i].id == id ) {
+                variables.todos[i].done = !variables.todos[i].done;
+                return true;
+            }
+        }
+        return false;
+    }
+
     boolean function delete( required string id ) {
         for ( var i = 1; i <= arrayLen( variables.todos ); i++ ) {
             if ( variables.todos[i].id == id ) {

@@ -1,11 +1,13 @@
 {
     "dependencies":{
         "cbvalidation":"^4.5.0+27",
-        "cbwire":"^4.1.9"
+        "cbwire":"^4.1.9",
+        "coldbox":"^7.4.1+22"
     },
     "installPaths":{
         "cbvalidation":"modules/cbvalidation/",
-        "cbwire":"modules/cbwire/"
+        "cbwire":"modules/cbwire/",
+        "coldbox":"coldbox/"
     },
     "location":"forgeboxStorage",
     "name":"hypermedia-app",
