@@ -33,7 +33,7 @@
     <div class="card mb-4">
         <div class="card-body">
             <div class="row g-3 align-items-end">
-                <div class="col-md-4">
+                <div class="col-md-8">
                     <label for="search" class="form-label">Search</label>
                     <input type="text" 
                            id="search"
@@ -46,7 +46,7 @@
                            hx-trigger="keyup changed delay:300ms"
                            hx-include="[name='limit'], [name='sortField'], [name='sortDirection']">
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="limit" class="form-label">Items per page</label>
                     <select name="limit" 
                             id="limit"
@@ -58,30 +58,6 @@
                         <option value="10" #prc.limit EQ 10 ? 'selected' : ''#>10</option>
                         <option value="15" #prc.limit EQ 15 ? 'selected' : ''#>15</option>
                         <option value="20" #prc.limit EQ 20 ? 'selected' : ''#>20</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label for="sortField" class="form-label">Sort by</label>
-                    <select name="sortField" 
-                            id="sortField"
-                            class="form-select"
-                            hx-get="#event.buildLink('htmx.list')#"
-                            hx-target="##todo-container"
-                            hx-include="[name='search'], [name='limit'], [name='sortDirection']">
-                        <option value="title" #prc.sortField EQ 'title' ? 'selected' : ''#>Title</option>
-                        <option value="done" #prc.sortField EQ 'done' ? 'selected' : ''#>Status</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label for="sortDirection" class="form-label">Direction</label>
-                    <select name="sortDirection" 
-                            id="sortDirection"
-                            class="form-select"
-                            hx-get="#event.buildLink('htmx.list')#"
-                            hx-target="##todo-container"
-                            hx-include="[name='search'], [name='limit'], [name='sortField']">
-                        <option value="asc" #prc.sortDirection EQ 'asc' ? 'selected' : ''#>Ascending</option>
-                        <option value="desc" #prc.sortDirection EQ 'desc' ? 'selected' : ''#>Descending</option>
                     </select>
                 </div>
             </div>
@@ -113,6 +89,18 @@
 }
 .badge {
     font-size: 0.75em;
+}
+.table th button:hover {
+    background-color: ##e9ecef !important;
+    color: ##495057 !important;
+}
+.table th button {
+    width: 100%;
+    text-align: left;
+    justify-content: flex-start;
+}
+.table th button:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
 }
 </style>
 </cfoutput>

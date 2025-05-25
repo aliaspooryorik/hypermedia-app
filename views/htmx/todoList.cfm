@@ -19,8 +19,46 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th scope="col" style="width: 50%;">Title</th>
-                            <th scope="col" style="width: 15%;">Status</th>
+                            <th scope="col" style="width: 50%;">
+                                <button type="button" 
+                                        class="btn btn-link p-0 text-decoration-none text-dark fw-bold d-flex align-items-center"
+                                        style="border: none; background: none;"
+                                        hx-get="#event.buildLink('htmx.list')#"
+                                        hx-vals='{"sortField": "title", "sortDirection": "#prc.sortField EQ 'title' AND prc.sortDirection EQ 'asc' ? 'desc' : 'asc'#"}'
+                                        hx-target="##todo-container"
+                                        hx-include="[name='search'], [name='limit'], [name='page']">
+                                    Title
+                                    <cfif prc.sortField EQ 'title'>
+                                        <cfif prc.sortDirection EQ 'desc'>
+                                            <i class="bi bi-caret-down-fill ms-1" aria-hidden="true"></i>
+                                        <cfelse>
+                                            <i class="bi bi-caret-up-fill ms-1" aria-hidden="true"></i>
+                                        </cfif>
+                                    <cfelse>
+                                        <i class="bi bi-caret-up ms-1 text-muted" aria-hidden="true"></i>
+                                    </cfif>
+                                </button>
+                            </th>
+                            <th scope="col" style="width: 15%;">
+                                <button type="button" 
+                                        class="btn btn-link p-0 text-decoration-none text-dark fw-bold d-flex align-items-center"
+                                        style="border: none; background: none;"
+                                        hx-get="#event.buildLink('htmx.list')#"
+                                        hx-vals='{"sortField": "done", "sortDirection": "#prc.sortField EQ 'done' AND prc.sortDirection EQ 'asc' ? 'desc' : 'asc'#"}'
+                                        hx-target="##todo-container"
+                                        hx-include="[name='search'], [name='limit'], [name='page']">
+                                    Status
+                                    <cfif prc.sortField EQ 'done'>
+                                        <cfif prc.sortDirection EQ 'desc'>
+                                            <i class="bi bi-caret-down-fill ms-1" aria-hidden="true"></i>
+                                        <cfelse>
+                                            <i class="bi bi-caret-up-fill ms-1" aria-hidden="true"></i>
+                                        </cfif>
+                                    <cfelse>
+                                        <i class="bi bi-caret-up ms-1 text-muted" aria-hidden="true"></i>
+                                    </cfif>
+                                </button>
+                            </th>
                             <th scope="col" style="width: 35%;">Actions</th>
                         </tr>
                     </thead>
