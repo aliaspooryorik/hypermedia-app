@@ -16,7 +16,8 @@ component extends="cbwire.models.Component" {
         "currentItems": [],
         "editingId": "",
         "editTitle": "",
-        "editDone": false
+        "editDone": false,
+        "toastMessage": ""
     };
 
     /**
@@ -135,12 +136,14 @@ component extends="cbwire.models.Component" {
         reset();
         cancelEdit(); // Clear any active editing state
         data.page = 1; // Reset to first page after adding
+        data.toastMessage = "Todo item added successfully!";
         list();
     }
 
     void function delete( required id ) {
         sleep( 500 ); // Simulate a delay for the delete operation
         TodoService.delete( id );
+        data.toastMessage = "Todo item deleted successfully!";
         // Check if current page is empty after deletion
         if (arrayLen(data.currentItems) == 0 && data.page > 1) {
             data.page--;

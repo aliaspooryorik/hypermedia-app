@@ -1,6 +1,12 @@
 <cfoutput>
 <section class="m-3">
 
+    <cfif data.toastMessage.len()>
+        <div class="alert alert-primary d-flex align-items-center position-absolute bottom-0 end-0" role="alert">
+            #data.toastMessage#
+        </div>
+    </cfif>
+
     <div class="row mb-3">
         <div class="col-md-6">
             <label class="form-label">Search todos:</label>
