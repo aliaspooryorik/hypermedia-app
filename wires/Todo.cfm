@@ -82,19 +82,88 @@
             <tbody>
                 <cfloop array="#data.currentItems#" item="item">
                     <tr wire:key="item-#item.id#">
-                        <td>#item.title#</td>
-                        <td>
-                            <cfif item.done>
-                                <span class="badge rounded-pill bg-success">Done</span>
-                            <cfelse>
-                                <span class="badge rounded-pill bg-warning text-dark">Pending</span>
-                            </cfif>
-                        </td>
-                        <td>
-                            <button class="btn btn-outline-danger btn-sm" wire:click="delete( '#item.id#' )" wire:loading.attr="disabled" wire:target="delete( '#item.id#' )">
-                                <i class="bi bi-trash" aria-hidden="true"></i> Remove
-                            </button>
-                        </td>
+                        <cfif data.editingId EQ item.id>
+                            <!--- Edit mode row --->
+                            <td>
+                                <input 
+                                    type="text" 
+                                    wire:model="editTitle" 
+                                    class="form-control form-control-sm"
+                                    wire:keydown.enter="saveEdit"
+                                    wire:keydown.escape="cancelEdit"
+                                >
+                            </td>
+                            <td>
+                                <select wire:model="editDone" class="form-select form-select-sm">
+                                    <option value="false">Pending</option>
+                                    <option value="true">Done</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <button 
+                                        class="btn btn-success btn-sm" 
+                                        wire:click="saveEdit"
+                                        wire:loading.attr="disabled" 
+                                        wire:target="saveEdit"
+                                        title="Save changes"
+                                    >
+                                        <i class="bi bi-check" aria-hidden="true"></i>
+                                    </button>
+                                    <button 
+                                        class="btn btn-secondary btn-sm" 
+                                        wire:click="cancelEdit"
+                                        title="Cancel editing"
+                                    >
+                                        <i class="bi bi-x" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        <cfelse>
+                            <!--- Display mode row --->
+                            <td>
+                                <cfif item.done>
+                                    <span class="text-decoration-line-through text-muted">#item.title#</span>
+                                <cfelse>
+                                    #item.title#
+                                </cfif>
+                            </td>
+                            <td>
+                                <button 
+                                    class="btn btn-link p-0 border-0" 
+                                    wire:click="toggleDone('#item.id#')"
+                                    wire:loading.attr="disabled" 
+                                    wire:target="toggleDone('#item.id#')"
+                                    title="Toggle status"
+                                >
+                                    <cfif item.done>
+                                        <span class="badge rounded-pill bg-success">Done</span>
+                                    <cfelse>
+                                        <span class="badge rounded-pill bg-warning text-dark">Pending</span>
+                                    </cfif>
+                                </button>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <button 
+                                        class="btn btn-outline-primary btn-sm" 
+                                        wire:click="startEdit('#item.id#')"
+                                        title="Edit item"
+                                    >
+                                        <i class="bi bi-pencil" aria-hidden="true"></i>
+                                    </button>
+                                    <button 
+                                        class="btn btn-outline-danger btn-sm" 
+                                        wire:click="delete('#item.id#')" 
+                                        wire:loading.attr="disabled" 
+                                        wire:target="delete('#item.id#')"
+                                        title="Delete item"
+                                    >
+                                        <i class="bi bi-trash" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </cfif>
                     </tr>
                 </cfloop>
             </tbody>

@@ -13,7 +13,10 @@ component extends="cbwire.models.Component" {
         "totalCount": 0,
         "totalPages": 0,
         "currentCount": 0,
-        "currentItems": []
+        "currentItems": [],
+        "editingId": "",
+        "editTitle": "",
+        "editDone": false
     };
 
     /**
@@ -122,6 +125,7 @@ component extends="cbwire.models.Component" {
 
     // Reset pagination when search changes
     void function updatedSearch() {
+        cancelEdit(); // Clear any active editing state when searching
         data.page = 1;
         list();
     }
@@ -129,6 +133,7 @@ component extends="cbwire.models.Component" {
     void function add( ) {
         TodoService.add( data.title );
         reset();
+        cancelEdit(); // Clear any active editing state
         data.page = 1; // Reset to first page after adding
         list();
     }
@@ -140,6 +145,49 @@ component extends="cbwire.models.Component" {
         if (arrayLen(data.currentItems) == 0 && data.page > 1) {
             data.page--;
         }
+        list();
+    }
+
+    // EDIT ACTIONS....
+    
+    /**
+     * Start editing a todo item
+     */
+    void function startEdit(required string id) {
+        // Find the todo item to edit
+        var todo = TodoService.findById(id);
+        if (!structIsEmpty(todo)) {
+            data.editingId = id;
+            data.editTitle = todo.title;
+            data.editDone = todo.done;
+        }
+    }
+
+    /**
+     * Cancel editing
+     */
+    void function cancelEdit() {
+        data.editingId = "";
+        data.editTitle = "";
+        data.editDone = false;
+    }
+
+    /**
+     * Save the edited todo item
+     */
+    void function saveEdit() {
+        if (len(trim(data.editTitle)) && len(data.editingId)) {
+            TodoService.update(data.editingId, data.editTitle, data.editDone);
+            cancelEdit();
+            list();
+        }
+    }
+
+    /**
+     * Toggle the done status of a todo item
+     */
+    void function toggleDone(required string id) {
+        TodoService.toggleDone(id);
         list();
     }
 
