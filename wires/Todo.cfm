@@ -1,28 +1,38 @@
 <cfoutput>
 <section class="m-3">
 
-    <form wire:submit="add" class="my-3">
-        <p>Enter a new item and click `Add`:</p>
-        <input 
-            type="text" 
-            wire:model="title" 
-            placeholder="New todo..." 
-            class="form-control" 
-            style="display:inline-block; width:auto; margin-right:8px;"
-        >
-        <button type="submit" class="btn btn-primary">
-            <i class="bi bi-plus-circle" aria-hidden="true"></i> Add Item
-        </button>
-    </form>
-
-    <div class="mb-3">
-        <input 
-            type="text" 
-            wire:model.live="search" 
-            placeholder="search..." 
-            class="form-control" 
-            style="display:inline-block; width:auto; margin-right:8px;"
-        >
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label class="form-label">Search todos:</label>
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="bi bi-search" aria-hidden="true"></i>
+                </span>
+                <input 
+                    type="text" 
+                    wire:model.live="search" 
+                    placeholder="Search todos..." 
+                    class="form-control"
+                >
+            </div>
+        </div>
+        <div class="col-md-6">
+            <form wire:submit="add">
+                <label class="form-label">Add new todo:</label>
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        wire:model="title" 
+                        placeholder="New todo..." 
+                        class="form-control"
+                        required
+                    >
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-plus-circle" aria-hidden="true"></i> Add
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
     
     <cfif data.currentItems.isEmpty()>
