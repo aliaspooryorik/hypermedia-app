@@ -114,6 +114,16 @@ component extends="cbwire.models.Component" {
         list();
     }
 
+	void function delete( required id ) {
+        TodoService.delete( id );
+		var maxPage = ceiling( ( data.totalCount - 1 ) / data.limit );
+		if ( data.page > maxPage ) {
+			// If we delete the last item on the current page, go to the previous page
+			data.page = maxPage;
+		}
+		list();
+	}
+
 	private function list() {
         var result = TodoService.list(
             search = data.search,

@@ -23,8 +23,8 @@
             </div>
         </div>
     </div>
-    
-    <cfif data.currentItems.isEmpty()>
+
+	<cfif data.currentItems.isEmpty()>
         <div class="alert alert-info" role="alert">
             <h5 class="alert-heading">No items found</h5>
             <cfif data.search.len()>
