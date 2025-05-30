@@ -53,6 +53,16 @@ component singleton {
             };
         }
         
+        // Handle zero limit case
+        if ( limit == 0 || itemsToReturn <= 0 ) {
+            return {
+                totalCount: datasetLength,
+                page: page,
+                limit: limit,
+                data: [],
+            };
+        }
+        
         return {
             totalCount: datasetLength,
             page: page,
@@ -133,6 +143,10 @@ component singleton {
             }
         }
         return false;
+    }
+
+    array function getTodos() {
+        return variables.todos;
     }
 
 }
