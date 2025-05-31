@@ -17,11 +17,16 @@ component extends="cbwire.models.Component" {
 
 	listeners = {
         "refresh-reload": "$refresh",
-        "item-saved": "setActive",
+        "item-saved": "itemSaved",
         "item-edit": "setInactive",
         "refresh-showadd": "setInactive",
 		"refresh-showlist": "setActive"
     };
+
+	function itemSaved( required string title ) {
+		data.active = true;
+		list();
+	}
 
 	function setActive() {
 		list();
@@ -118,6 +123,7 @@ component extends="cbwire.models.Component" {
 
 	void function delete( required id ) {
         TodoService.delete( id );
+		js("showSuccessToast('Deleted todo')");
 		var maxPage = ceiling( ( data.totalCount - 1 ) / data.limit );
 		if ( data.page > maxPage ) {
 			// If we delete the last item on the current page, go to the previous page

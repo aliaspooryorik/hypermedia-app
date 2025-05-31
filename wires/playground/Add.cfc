@@ -28,10 +28,12 @@ component extends="cbwire.models.Component" {
 	void function save( ) {
 		if (data.id == "") {
 			TodoService.add( data.title, data.done );
+			js("showSuccessToast('Added todo: #encodeForJavascript(data.title)#');");
 		}
 		else {
 			// edit existing item
 			TodoService.update( data.id, data.title, data.done );
+			js("showSuccessToast('Updated todo: #encodeForJavascript(data.title)#');");
 		}
 		dispatch( "item-saved", { "title": data.title } );
 		reset();

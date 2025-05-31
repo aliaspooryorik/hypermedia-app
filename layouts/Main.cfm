@@ -182,6 +182,11 @@
 		#view()#
 	</main>
 
+	<!--- Toast Container for notifications --->
+	<div class="toast-container position-fixed top-0 end-0 p-3" id="toastContainer" style="z-index: 1055;">
+		<!--- Toasts will be dynamically added here --->
+	</div>
+
 	<!---
 		JavaScript
 		- Bootstrap
@@ -191,6 +196,67 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 	
+	<script>
+		// Toast utility functions
+		function showToast(message, type = 'info', duration = 5000) {
+			const toastContainer = document.getElementById('toastContainer');
+			const toastId = 'toast-' + Date.now();
+			
+			// Define toast types and their corresponding Bootstrap classes
+			const toastTypes = {
+				'success': { bgClass: 'bg-success', iconClass: 'bi-check-circle-fill' },
+				'error': { bgClass: 'bg-danger', iconClass: 'bi-exclamation-triangle-fill' },
+				'warning': { bgClass: 'bg-warning', iconClass: 'bi-exclamation-triangle-fill' },
+				'info': { bgClass: 'bg-primary', iconClass: 'bi-info-circle-fill' }
+			};
+			
+			const toastConfig = toastTypes[type] || toastTypes['info'];
+			
+			const toastHTML = `
+				<div class="toast" id="${toastId}" role="alert" aria-live="assertive" aria-atomic="true">
+					<div class="toast-header ${toastConfig.bgClass} text-white">
+						<i class="bi ${toastConfig.iconClass} me-2"></i>
+						<strong class="me-auto">${type.charAt(0).toUpperCase() + type.slice(1)}</strong>
+						<button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+					</div>
+					<div class="toast-body">
+						${message}
+					</div>
+				</div>
+			`;
+			
+			toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+			
+			const toastElement = document.getElementById(toastId);
+			const toast = new bootstrap.Toast(toastElement, {
+				delay: duration
+			});
+			
+			// Remove toast from DOM after it's hidden
+			toastElement.addEventListener('hidden.bs.toast', function () {
+				toastElement.remove();
+			});
+			
+			toast.show();
+		}
+		
+		// Convenience functions for different toast types
+		function showSuccessToast(message, duration = 5000) {
+			showToast(message, 'success', duration);
+		}
+		
+		function showErrorToast(message, duration = 5000) {
+			showToast(message, 'error', duration);
+		}
+		
+		function showWarningToast(message, duration = 5000) {
+			showToast(message, 'warning', duration);
+		}
+		
+		function showInfoToast(message, duration = 5000) {
+			showToast(message, 'info', duration);
+		}
+	</script>
 </body>
 </html>
 </cfoutput>
