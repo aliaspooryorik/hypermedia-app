@@ -17,6 +17,8 @@ component extends="cbwire.models.Component" {
 
 	listeners = {
         "refresh-reload": "$refresh",
+        "item-saved": "setActive",
+        "item-edit": "setInactive",
         "refresh-showadd": "setInactive",
 		"refresh-showlist": "setActive"
     };
@@ -122,6 +124,10 @@ component extends="cbwire.models.Component" {
 			data.page = maxPage;
 		}
 		list();
+	}
+
+	void function startEdit( required id ) {
+		dispatch( "item-edit", { id: id } );
 	}
 
 	private function list() {

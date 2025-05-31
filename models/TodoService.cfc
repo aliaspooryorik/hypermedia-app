@@ -22,9 +22,9 @@ component singleton {
 
     void function add( required string title, boolean done = false ) {
         variables.todos.append( {
-            id     : createUUID(),
-            title  : title,
-            done   : done
+            "id"     : createUUID(),
+            "title"  : title,
+            "done"   : done
         } );
     }
 

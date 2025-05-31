@@ -90,19 +90,11 @@
 							</cfif>
 						</td>
 						<td>
-							<button 
-								class="btn btn-link p-0 border-0" 
-								wire:click="toggleDone('#item.id#')"
-								wire:loading.attr="disabled" 
-								wire:target="toggleDone('#item.id#')"
-								title="Toggle status"
-							>
-								<cfif item.done>
-									<span class="badge rounded-pill bg-success">Done</span>
-								<cfelse>
-									<span class="badge rounded-pill bg-warning text-dark">Pending</span>
-								</cfif>
-							</button>
+							<cfif item.done>
+								<span class="badge rounded-pill bg-success">Done</span>
+							<cfelse>
+								<span class="badge rounded-pill bg-warning text-dark">Pending</span>
+							</cfif>
 						</td>
 						<td>
 							<div class="btn-group btn-group-sm" role="group">

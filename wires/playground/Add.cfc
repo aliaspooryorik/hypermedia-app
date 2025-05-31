@@ -4,16 +4,20 @@ component extends="cbwire.models.Component" {
 	
 	data = {
 		"active": true,
+		"debug": true,
+		"id": "",
 		"title": "",
+		"done": false
 	};
 
 	listeners = {
-        "refresh-showadd": "setActive",
+		"item-edit": "doEdit",
+		"refresh-showadd": "setActive",
 		"refresh-showlist": "setInactive"
-    };
+	};
 
 	void function setActive() {
-		data.active = true;
+		reset();
 	}
 
 	void function setInactive() {
@@ -21,14 +25,33 @@ component extends="cbwire.models.Component" {
 	}
 
 	// actions...
-	void function add( ) {
-        TodoService.add( data.title );
-        reset();
-		dispatch( "refresh-showlist" );
-        // cancelEdit(); // Clear any active editing state
-        // data.page = 1; // Reset to first page after adding
-        // data.toastMessage = "Todo item added successfully!";
-        // list();
-    }
+	void function save( ) {
+		if (data.id == "") {
+			TodoService.add( data.title, data.done );
+		}
+		else {
+			// edit existing item
+			TodoService.update( data.id, data.title, data.done );
+		}
+		dispatch( "item-saved", { "title": data.title } );
+		reset();
+		// hide the form
+		setInactive();
+	}
+
+	// view helpers...
+	string function getMode() {
+		if (data.id == "") {
+			return "add";
+		}
+		return "edit";
+	}
+
+	// private methods...
+	void function doEdit( required string id ) {
+		var item = TodoService.findById( id );
+		data.append( item, true );
+		data.active = true;
+	}
 
 }
