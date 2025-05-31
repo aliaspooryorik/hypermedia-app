@@ -102,7 +102,7 @@ component extends="cbwire.models.Component" {
 
     void function goToPage(required numeric page) {
         var totalPages = data.totalPages;
-        if (page >= 1 && page <= totalPages) {
+        if (page >= 1 && page <= totalPages && page != data.page) {
             data.page = page;
             list();
         }
@@ -122,10 +122,16 @@ component extends="cbwire.models.Component" {
     }
 
 	void function delete( required id ) {
+		var item = TodoService.findById( id );
+		if (isNull(item)) {
+			js("showErrorToast('Todo not found');");
+			return;
+		}
+		
         TodoService.delete( id );
-		js("showSuccessToast('Deleted todo')");
+		js("showSuccessToast('Deleted todo: #encodeForJavascript(item.title)#');");
 		var maxPage = ceiling( ( data.totalCount - 1 ) / data.limit );
-		if ( data.page > maxPage ) {
+		if ( data.page > maxPage && maxPage > 0 ) {
 			// If we delete the last item on the current page, go to the previous page
 			data.page = maxPage;
 		}

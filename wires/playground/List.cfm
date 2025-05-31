@@ -110,9 +110,15 @@
 									wire:click="delete('#item.id#')" 
 									wire:loading.attr="disabled" 
 									wire:target="delete('#item.id#')"
+									wire:confirm="Are you sure you want to delete '#encodeForHtmlAttribute(item.title)#'?"
 									title="Delete item"
 								>
-									<i class="bi bi-trash" aria-hidden="true"></i>
+									<span wire:loading.remove wire:target="delete('#item.id#')">
+										<i class="bi bi-trash" aria-hidden="true"></i>
+									</span>
+									<span wire:loading wire:target="delete('#item.id#')">
+										<i class="bi bi-hourglass" aria-hidden="true"></i>
+									</span>
 								</button>
 							</div>
 						</td>
