@@ -49,7 +49,7 @@ component singleton {
                 totalCount: datasetLength,
                 page: page,
                 limit: limit,
-                data: [],
+                data: []
             };
         }
         
@@ -59,7 +59,7 @@ component singleton {
                 totalCount: datasetLength,
                 page: page,
                 limit: limit,
-                data: [],
+                data: []
             };
         }
         
@@ -67,7 +67,7 @@ component singleton {
             totalCount: datasetLength,
             page: page,
             limit: limit,
-            data: dataset.slice( startIndex, itemsToReturn ),
+            data: dataset.slice( startIndex, itemsToReturn )
         };
     }
     

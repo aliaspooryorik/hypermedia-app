@@ -12,7 +12,7 @@ component extends="cbwire.models.Component" {
 		"totalCount": 0,
 		"totalPages": 0,
 		"currentCount": 0,
-		"currentItems": [],
+		"currentItems": []
 	};
 
 	listeners = {
